@@ -3,8 +3,12 @@ import pytest
 from langchain.schema import Document
 from continuous_rag_eval.rag import RAG
 
-def test_query():
-  rag = RAG()
+@pytest.fixture
+def rag():
+  return RAG()
+
+def test_query(rag):
+
   docs = [
       Document(
           page_content="Albert Einstein was a physicist who developed the theory of relativity. "
@@ -29,15 +33,6 @@ def test_query():
 
   assert "Albert Einstein" in rag.query(query="Which physicist developed the theory of relativity?")["response"]
   assert "1643" in rag.query(query="When was Isaac Newton born?")["response"]
-
-
-def test_query_setup():
-  rag = RAG()
-
-
-def teardown_test_query(rag):
-  rag.close()
-
 
 if __name__ == "__main__":
   pytest.main()

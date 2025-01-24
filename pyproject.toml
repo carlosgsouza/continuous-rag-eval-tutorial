@@ -2,12 +2,19 @@
 name = "continuous-rag-eval-tutorial"
 version = "0.1.0"
 description = ""
-authors = ["Carlos <carlosgsouza@gmail.com>"]
+authors = ["Carlos Souza <carlosgsouza@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
+langchain = "^0.3.15"
+langchain-openai = "^0.3.2"
+langchain-core = "^0.3.31"
+langsmith = "^0.3.1"
 
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.4"
 
 [build-system]
 requires = ["poetry-core"]

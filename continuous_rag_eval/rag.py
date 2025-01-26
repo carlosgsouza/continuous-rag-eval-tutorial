@@ -1,7 +1,6 @@
 from langchain import hub
-from langchain.callbacks import LangChainTracer
-from langchain.schema import Document
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain.schema import Document
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.vectorstores import InMemoryVectorStore
 from langsmith import traceable
@@ -11,21 +10,15 @@ class RAG:
   Retrieval-Augmented Generation (RAG) class for question answering.
   """
 
-  def __init__(self):
+  def __init__(self,
+               llm = ChatOpenAI(temperature=0),
+               vector_store = InMemoryVectorStore(embedding=OpenAIEmbeddings())):
     """
-    Initializes RAG with the default LLM, embeddings, and an empty in-memory vector store.
+    Initializes RAG with a default LLM and an in-memory vector store.
     """
 
-    self.llm = ChatOpenAI(temperature=0)
-    self.embedding = OpenAIEmbeddings()
-    self.vector_store = InMemoryVectorStore(embedding=self.embedding)
-    
-    rag_prompt = hub.pull("rlm/rag-prompt")
-    self.rag_chain = (
-        rag_prompt
-      | self.llm
-      | StrOutputParser()
-    )
+    self.llm = llm
+    self.vector_store = vector_store
     
   def stored_documents(self, documents):
     """
@@ -61,8 +54,10 @@ class RAG:
     
     docs = self.vector_store.as_retriever().invoke(query)
     context = "\n".join([doc.page_content for doc in docs])
-    response = self.rag_chain.invoke({"context": context, "question": query})
 
+    prompt_template = hub.pull("rlm/rag-prompt")
+    prompt = prompt_template.format(context=context, question=query)
+    response = self.llm.invoke(prompt).content
 
     return {
       "response": response,

@@ -4,6 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["Carlos Souza <carlosgsouza@gmail.com>"]
 readme = "README.md"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -19,6 +20,7 @@ langchain = "^0.3.15"
 langchain-openai = "^0.3.2"
 langchain-core = "^0.3.31"
 langsmith = "^0.3.1"
+pytest-mock = "^3.14.0"
 
 [build-system]
 requires = ["poetry-core"]

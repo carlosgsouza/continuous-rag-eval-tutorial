@@ -1,0 +1,33 @@
+name: Tests
+
+on:
+  push:
+  pull_request: 
+  release: 
+  workflow_dispatch:
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
+        with:
+          python-version: '3.10'
+      - uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+      - run: poetry install
+
+      - name: Run unit tests
+        run: |
+          poetry run pytest tests/
+
+      - name: Run integration tests
+        env:
+          LANGCHAIN_API_KEY: ${{ secrets.LANGCHAIN_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          RAGAS_APP_TOKEN: ${{ secrets.RAGAS_APP_TOKEN }}
+        run: |
+          poetry run pytest integration_tests/

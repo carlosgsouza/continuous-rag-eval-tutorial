@@ -20,7 +20,7 @@ def test_docs():
 
 def test_store_documents(mocker, test_docs):
   vector_store = mocker.MagicMock()
-  rag = RAG(vector_store=vector_store)
+  rag = RAG(llm=mocker.MagicMock(), vector_store=vector_store)
 
   rag.stored_documents(test_docs)
 

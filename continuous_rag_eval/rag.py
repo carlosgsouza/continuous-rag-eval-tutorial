@@ -10,15 +10,14 @@ class RAG:
   Retrieval-Augmented Generation (RAG) class for question answering.
   """
 
-  def __init__(self,
-               llm = ChatOpenAI(temperature=0),
-               vector_store = InMemoryVectorStore(embedding=OpenAIEmbeddings())):
+  def __init__(self, llm=None, vector_store=None):
     """
-    Initializes RAG with a default LLM and an in-memory vector store.
+    Initializes the LLM and and the vector store.
     """
 
-    self.llm = llm
-    self.vector_store = vector_store
+    self.llm = llm if llm is not None else ChatOpenAI(temperature=0)
+    self.vector_store = vector_store if vector_store is not None else InMemoryVectorStore(
+        embedding=OpenAIEmbeddings())
     
   def stored_documents(self, documents):
     """
@@ -48,9 +47,6 @@ class RAG:
     
     Returns a dict with the response and the source documents.
     """
-    
-    # We manually handle tracing so separate calls to the retriever and the LLM are logged
-    # together in LangSmith.
     
     docs = self.vector_store.as_retriever().invoke(query)
     context = "\n".join([doc.page_content for doc in docs])

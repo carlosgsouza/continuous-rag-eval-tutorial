@@ -1,0 +1,44 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: cimg/python:3.10
+    steps:
+      - checkout
+
+      - run:
+          name: Install Poetry
+          command: |
+            curl -sSL https://install.python-poetry.org | python3 -
+            echo 'export PATH="$HOME/.local/bin:$PATH"' >> $BASH_ENV
+            source $BASH_ENV
+            poetry --version
+
+      - restore_cache:
+          keys:
+            - poetry-deps-{{ checksum "pyproject.toml" }}
+            - poetry-deps-
+
+      - run:
+          name: Install dependencies
+          command: |
+            source $BASH_ENV
+            poetry install
+
+      - save_cache:
+          paths:
+            - .venv
+            - ~/.cache/pypoetry
+          key: poetry-deps-{{ checksum "pyproject.toml" }}
+
+      - run:
+          name: Run tests
+          command: |
+            source $BASH_ENV
+            poetry run pytest -s --maxfail=1 --disable-warnings -q
+
+workflows:
+  build_and_test:
+    jobs:
+      - build

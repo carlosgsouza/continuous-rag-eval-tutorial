@@ -24,21 +24,6 @@ class RAG:
     Stores documents in the vector store.
     """
     self.vector_store.add_documents(documents)
-    
-  def store_eval_dataset_documents(self, eval_dataset: list):
-    """
-    Extracts the context entries from the eval dataset and stores them in the vector store. This is
-    a convenience method to simplity the evaluation code.
-    """
-    documents = []
-    for q in eval_dataset:
-      for c in q["context"]:
-        doc = Document(
-            page_content = c["page_content"],
-            metadata = {"title": c["metadata"]["title"]}
-        )
-        documents.append(doc)
-    self.store_documents(documents)
 
   @traceable(name="RAG Query")
   def query(self, query: str) -> dict:
@@ -51,7 +36,14 @@ class RAG:
     docs = self.vector_store.as_retriever().invoke(query)
     context = "\n".join([doc.page_content for doc in docs])
 
-    prompt_template = hub.pull("rlm/rag-prompt")
+    prompt_template = """You are an assistant for question-answering tasks. Use the following pieces
+    of retrieved context to answer the question. If the answer is not in the context, just say "I 
+    don't know". Use three sentences maximum and keep the answer concise.
+    
+    Question: {question} 
+    Context: {context} 
+    Answer:"""
+
     prompt = prompt_template.format(context=context, question=query)
     response = self.llm.invoke(prompt).content
 

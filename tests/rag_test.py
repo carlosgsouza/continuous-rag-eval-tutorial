@@ -26,12 +26,13 @@ def test_query(rag):
           metadata={
               "title": "Newton"
           }
-      ),
+      )
   ]
   rag.store_documents(docs)
 
   assert "Albert Einstein" in rag.query(query="Which physicist developed the theory of relativity?")["response"]
   assert "1643" in rag.query(query="When was Isaac Newton born?")["response"]
+  assert "I don't know" in rag.query(query="Who was the first person to use a telescope to observe the night sky?")["response"]
 
 if __name__ == "__main__":
   pytest.main()

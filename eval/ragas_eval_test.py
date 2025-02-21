@@ -9,11 +9,16 @@ from ragas.llms import LangchainLLMWrapper
 from ragas.metrics import Faithfulness, LLMContextPrecisionWithReference, LLMContextRecall, ResponseRelevancy
 
 from continuous_rag_eval.rag import RAG
+import glob
 
 @pytest.fixture
 def eval_dataset():
-  with open("eval/eval_dataset.json", "r") as f:
-    yield json.load(f)
+  dataset = []
+  for filepath in glob.glob("eval/data/*.json"):
+    with open(filepath, "r") as f:
+      data = json.load(f)
+      dataset.extend(data)
+  yield dataset
 
 @pytest.fixture
 def rag(eval_dataset):
@@ -38,6 +43,10 @@ def test_eval_rag(eval_dataset, rag):
   # samples, which is passed to Ragas for evaluation..
   samples = []
   for q in eval_dataset:
+    # Skips entries from the eval dataset that have just the context, but no questions.
+    if q["question"] is None:
+      continue
+    
     query = q["question"]
     result = rag.query(query)
     samples.append(

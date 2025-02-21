@@ -51,7 +51,14 @@ class RAG:
     docs = self.vector_store.as_retriever().invoke(query)
     context = "\n".join([doc.page_content for doc in docs])
 
-    prompt_template = hub.pull("rlm/rag-prompt")
+    prompt_template = """You are an assistant for question-answering tasks. Use the following pieces
+    of retrieved context to answer the question. If the answer is not in the context, just say "I 
+    don't know". Use three sentences maximum and keep the answer concise.
+    
+    Question: {question} 
+    Context: {context} 
+    Answer:"""
+
     prompt = prompt_template.format(context=context, question=query)
     response = self.llm.invoke(prompt).content
 

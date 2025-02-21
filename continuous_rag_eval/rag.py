@@ -19,7 +19,7 @@ class RAG:
     self.vector_store = vector_store if vector_store is not None else InMemoryVectorStore(
         embedding=OpenAIEmbeddings())
     
-  def stored_documents(self, documents):
+  def store_documents(self, documents):
     """
     Stores documents in the vector store.
     """
@@ -38,7 +38,7 @@ class RAG:
             metadata = {"title": c["metadata"]["title"]}
         )
         documents.append(doc)
-    self.stored_documents(documents)
+    self.store_documents(documents)
 
   @traceable(name="RAG Query")
   def query(self, query: str) -> dict:

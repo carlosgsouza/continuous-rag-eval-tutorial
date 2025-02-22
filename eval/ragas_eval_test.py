@@ -46,8 +46,7 @@ def evaluation(eval_dataset, rag):
   # Executes a query for each entry in the eval dataset and stores the input and output data in
   # samples, which is passed to Ragas for evaluation..
   samples = []
-  # TODO: Evaluate all entries once the dataset is ready.
-  for q in eval_dataset[:3]:
+  for q in eval_dataset:
     # Skips entries from the eval dataset that have just the context, but no questions.
     if "question" not in q:
       continue
@@ -78,9 +77,11 @@ def evaluation(eval_dataset, rag):
 
   # Performs the actual evaluation and uploads the results to app.ragas.io.
   eval_result = evaluate(evaluation_dataset, metrics)
-  dashboard_url = eval_result.upload()
-  print(f"Ragas Dashboard: {dashboard_url}")
-
+  try:
+    dashboard_url = eval_result.upload()
+    print(f"Ragas Dashboard: {dashboard_url}")
+  except Exception as e:
+    print(f"Failed to upload evaluation results: {e}")
 
   scores = eval_result.to_pandas()
   aggregated_scores = {

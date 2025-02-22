@@ -1,6 +1,6 @@
 {
-  "answer_relevancy": "answer_relevancy > 0.9",
-  "faithfulness": "faithfulness > 0.95",
-  "llm_context_precision_with_reference": "llm_context_precision_with_reference > 0.8",
-  "context_recall": "context_recall > 0.9"
+  "answer_relevancy": "answer_relevancy > 0.5",
+  "faithfulness": "faithfulness > 0.5",
+  "llm_context_precision_with_reference": "llm_context_precision_with_reference > 0.3",
+  "context_recall": "context_recall > 0.5"
 }

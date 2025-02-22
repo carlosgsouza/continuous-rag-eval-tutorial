@@ -42,11 +42,7 @@ jobs:
           name: Run evaluation
           command: |
             source $BASH_ENV
-<<<<<<< HEAD
             poetry run pytest -s --maxfail=1 --disable-warnings -q eval
-=======
-            poetry run pytest -s --maxfail=1 --disable-warnings -q evaluation
->>>>>>> 814bc84adfc1a0053a905096cfa686b4d0e033f6
 
 workflows:
   build_and_test:

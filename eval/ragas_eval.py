@@ -59,8 +59,8 @@ def run_evaluation():
     metric_name: scores[metric_name].mean() for metric_name in [m.name for m in metrics]
   }
   
-  os.makedirs("test-results", exist_ok=True)
-  with open("test-results/aggregated_eval_metrics.json", "w") as f:
+  os.makedirs("eval-results", exist_ok=True)
+  with open("eval-results/aggregated_metrics.json", "w") as f:
     json.dump(aggregated_scores, f, indent=2)
 
 def load_eval_dataset():

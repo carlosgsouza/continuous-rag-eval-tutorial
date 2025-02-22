@@ -37,14 +37,12 @@ def rag(eval_dataset):
   return r
 
 def test_eval_rag(eval_dataset, rag):
-  rag.store_eval_dataset_documents(eval_dataset[:1])
-
   # Executes a query for each entry in the eval dataset and stores the input and output data in
   # samples, which is passed to Ragas for evaluation..
   samples = []
   for q in eval_dataset:
     # Skips entries from the eval dataset that have just the context, but no questions.
-    if q["question"] is None:
+    if "question" not in q:
       continue
     
     query = q["question"]

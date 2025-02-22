@@ -36,14 +36,16 @@ jobs:
           name: Run tests
           command: |
             source $BASH_ENV
-            poetry run pytest -s --maxfail=1 --disable-warnings -q tests
+            poetry run pytest -s --maxfail=1 --disable-warnings -q tests --junitxml=test-results/tests.xml
 
       - run:
           name: Run evaluation
           command: |
             source $BASH_ENV
-            poetry run pytest -s --maxfail=1 --disable-warnings -q eval
+            poetry run pytest -s --maxfail=1 --disable-warnings -q eval --junitxml=test-results/eval.xml
 
+      - store_test_results:
+          path: test-results
 workflows:
   build_and_test:
     jobs:

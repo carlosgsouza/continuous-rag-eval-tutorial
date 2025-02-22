@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  evals: circleci/evals@2.0
 
 jobs:
   build:
@@ -38,15 +40,19 @@ jobs:
             source $BASH_ENV
             poetry run pytest -s --maxfail=1 --disable-warnings -q tests --junitxml=test-results/tests.xml
 
-      - store_test_results:
-          path: test-results
-
       - run:
           name: Run evaluation
           command: |
             source $BASH_ENV
-            PYTHONPATH=.
-            poetry run python eval/ragas_eval.py
+            PYTHONPATH=. poetry run python eval/ragas_eval.py
+
+      - evals/test:
+          assertions: eval/thresholds.json
+          metrics: eval-results/aggregated_metrics.json
+          results: test-results/eval.xml
+
+      - store_test_results:
+          path: test-results
 
 workflows:
   build_and_test:

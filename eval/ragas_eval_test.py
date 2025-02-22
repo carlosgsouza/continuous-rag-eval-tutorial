@@ -1,4 +1,5 @@
 import json
+import os
 import pytest
 
 from langchain.docstore.document import Document
@@ -11,7 +12,7 @@ from ragas.metrics import Faithfulness, LLMContextPrecisionWithReference, LLMCon
 from continuous_rag_eval.rag import RAG
 import glob
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def eval_dataset():
   dataset = []
   for filepath in glob.glob("eval/data/*.json"):
@@ -20,7 +21,7 @@ def eval_dataset():
       dataset.extend(data)
   yield dataset
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def rag(eval_dataset):
   r = RAG()
 
@@ -36,11 +37,17 @@ def rag(eval_dataset):
 
   return r
 
-def test_eval_rag(eval_dataset, rag):
+@pytest.fixture(scope="module")
+def evaluation(eval_dataset, rag):
+  """
+  Evaluates the RAG model on the eval dataset and returns the aggregated scores.
+  """
+
   # Executes a query for each entry in the eval dataset and stores the input and output data in
   # samples, which is passed to Ragas for evaluation..
   samples = []
-  for q in eval_dataset:
+  # TODO: Evaluate all entries once the dataset is ready.
+  for q in eval_dataset[:3]:
     # Skips entries from the eval dataset that have just the context, but no questions.
     if "question" not in q:
       continue
@@ -70,35 +77,32 @@ def test_eval_rag(eval_dataset, rag):
   ]
 
   # Performs the actual evaluation and uploads the results to app.ragas.io.
-  try:
-    eval_result = evaluate(evaluation_dataset, metrics)
-    eval_result.upload()
-  except Exception as e:
-    print(f"Uploading results to Ragas failed: {e}")
+  eval_result = evaluate(evaluation_dataset, metrics)
+  dashboard_url = eval_result.upload()
+  print(f"Ragas Dashboard: {dashboard_url}")
 
-  # Validates the aggrregated score (calculated by validate_aggrregated_score) satisfies min_values.
-  validate_aggregated_score(
-    eval_result,
-    min_values={
-        ResponseRelevancy.name: 0.1,
-        Faithfulness.name: 0.1,
-        LLMContextPrecisionWithReference.name: 0.1,
-        LLMContextRecall.name: 0.1,
-    },
-  )
 
-def validate_aggregated_score(eval_result, min_values):
-  """
-  Validates that the aggregated scores for each metric meet the minimum values.
-  """
-  # The aggregated scores are the mean of the score for each indivual entry.
   scores = eval_result.to_pandas()
   aggregated_scores = {
-    metric_name: scores[metric_name].mean() for metric_name in min_values.keys()
+    metric_name: scores[metric_name].mean() for metric_name in [m.name for m in metrics]
   }
+  os.makedirs("test-results", exist_ok=True)
+  with open("test-results/aggregated_eval_metrics.json", "w") as f:
+    json.dump(aggregated_scores, f, indent=2)
 
-  # Creates a test for each metric defined in min_values.
-  print(f"Aggregated Scores: {aggregated_scores}")
+  return aggregated_scores
+
+def test_answer_relevancy(evaluation):
+  assert evaluation["answer_relevancy"] > 0.5
+
+def test_faithfulness(evaluation):
+  assert evaluation["faithfulness"] > 0.5
+
+def test_llm_context_precision_with_reference(evaluation):
+  assert evaluation["llm_context_precision_with_reference"] > 0.3
+
+def test_context_recall(evaluation):
+  assert evaluation["context_recall"] > 0.5
 
 if __name__ == '__main__':
   pytest.main()

@@ -48,7 +48,7 @@ jobs:
 
       - evals/test:
           assertions: eval/thresholds.json
-          metrics: eval-results/aggregated_metrics.json
+          metrics: test-results/aggregated_eval_metrics.json
           results: test-results/eval.xml
 
       - store_test_results:

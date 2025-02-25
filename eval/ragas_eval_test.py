@@ -47,7 +47,7 @@ def evaluation(eval_dataset, rag):
     # Executes a query for each entry in the eval dataset and stores the input and output data in
     # samples, which is passed to Ragas for evaluation..
     samples = []
-    for q in tqdm(eval_dataset[5:15], desc="Running queries"):
+    for q in tqdm(eval_dataset, desc="Running queries"):
         # Skips entries from the eval dataset that have just the context, but no questions.
         if "question" not in q:
             continue

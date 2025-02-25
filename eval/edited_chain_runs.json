@@ -1,0 +1,284 @@
+{
+  "answer_relevancy": [
+    {
+      "metric_input": {
+        "user_input": "When did the Beatles breakup?",
+        "response": "I don't know."
+      },
+      "metric_output": 0,
+      "prompts": {
+        "response_relevance_prompt": {
+          "prompt_input": {
+            "response": "I don't know."
+          },
+          "prompt_output": {
+            "question": "What do you think about the current situation?",
+            "noncommittal": 1
+          },
+          "edited_output": null
+        }
+      },
+      "is_accepted": true
+    },
+    {
+      "metric_input": {
+        "user_input": "How many cars are sold in Chine per year?",
+        "response": "I don't know."
+      },
+      "metric_output": 0,
+      "prompts": {
+        "response_relevance_prompt": {
+          "prompt_input": {
+            "response": "I don't know."
+          },
+          "prompt_output": {
+            "question": "What do you think about the current situation?",
+            "noncommittal": 1
+          },
+          "edited_output": null
+        }
+      },
+      "is_accepted": true
+    },
+    {
+      "metric_input": {
+        "user_input": "Where did the form of music played by Die Rhner Suwntzt originate?",
+        "response": "I don't know."
+      },
+      "metric_output": 0,
+      "prompts": {
+        "response_relevance_prompt": {
+          "prompt_input": {
+            "response": "I don't know."
+          },
+          "prompt_output": {
+            "question": "What do you think about the current situation?",
+            "noncommittal": 1
+          },
+          "edited_output": null
+        }
+      },
+      "is_accepted": false
+    },
+    {
+      "metric_input": {
+        "user_input": "Which state does the drug stores, of which the CEO is Warren Bryant, are located?",
+        "response": "California."
+      },
+      "metric_output": 0.7812305128954389,
+      "prompts": {
+        "response_relevance_prompt": {
+          "prompt_input": {
+            "response": "California."
+          },
+          "prompt_output": {
+            "question": "What is the name of the state where Hollywood is located?",
+            "noncommittal": 0
+          },
+          "edited_output": null
+        }
+      },
+      "is_accepted": true
+    },
+    {
+      "metric_input": {
+        "user_input": "Between two tennis players Kim Clijsters and Mary Pierce, who is older?",
+        "response": "Mary Pierce is older than Kim Clijsters."
+      },
+      "metric_output": 0.972014656327008,
+      "prompts": {
+        "response_relevance_prompt": {
+          "prompt_input": {
+            "response": "Mary Pierce is older than Kim Clijsters."
+          },
+          "prompt_output": {
+            "question": "Who is older, Mary Pierce or Kim Clijsters?",
+            "noncommittal": 0
+          },
+          "edited_output": null
+        }
+      },
+      "is_accepted": true
+    },
+    {
+      "metric_input": {
+        "user_input": "Which tennis player won more Grand Slam titles, Henri Leconte or Jonathan Stark?",
+        "response": "Jonathan Stark won more Grand Slam titles than Henri Leconte."
+      },
+      "metric_output": 0.9850470684329848,
+      "prompts": {
+        "response_relevance_prompt": {
+          "prompt_input": {
+            "response": "Jonathan Stark won more Grand Slam titles than Henri Leconte."
+          },
+          "prompt_output": {
+            "question": "Who won more Grand Slam titles, Jonathan Stark or Henri Leconte?",
+            "noncommittal": 0
+          },
+          "edited_output": null
+        }
+      },
+      "is_accepted": false
+    },
+    {
+      "metric_input": {
+        "user_input": "In what year was the company that co-developed and distributed the BlackBerry DTEK60 founded?",
+        "response": "Prediction Company, the company that co-developed and distributed the BlackBerry DTEK60, was founded in March 1991."
+      },
+      "metric_output": 0.7963559244650512,
+      "prompts": {
+        "response_relevance_prompt": {
+          "prompt_input": {
+            "response": "Prediction Company, the company that co-developed and distributed the BlackBerry DTEK60, was founded in March 1991."
+          },
+          "prompt_output": {
+            "question": "When was Prediction Company founded?",
+            "noncommittal": 0
+          },
+          "edited_output": null
+        }
+      },
+      "is_accepted": false
+    },
+    {
+      "metric_input": {
+        "user_input": "Human Error is the season finale of the third season of a tv show that aired on what network?",
+        "response": "House aired on the Fox network."
+      },
+      "metric_output": 0.8301655802601321,
+      "prompts": {
+        "response_relevance_prompt": {
+          "prompt_input": {
+            "response": "House aired on the Fox network."
+          },
+          "prompt_output": {
+            "question": "On which network did the show House air?",
+            "noncommittal": 0
+          },
+          "edited_output": null
+        }
+      },
+      "is_accepted": false
+    },
+    {
+      "metric_input": {
+        "user_input": "What book contains a poem which, along with Beowulf and the Anglo-Saxon Chronicle, preserves a legendary list of the kings of the Angles?",
+        "response": "The book that contains a poem preserving a legendary list of the kings of the Angles is Layamon's Brut, also known as The Chronicle of Britain, a Middle English poem compiled by the English priest Layamon. It narrates the history of Britain and is the first historiography written in English since the Anglo-Saxon Chronicle. The poem is largely based on the Anglo-Norman Roman de Brut by Wace and includes an enlarged section on the life and exploits of King Arthur."
+      },
+      "metric_output": 0.7338100014545574,
+      "prompts": {
+        "response_relevance_prompt": {
+          "prompt_input": {
+            "response": "The book that contains a poem preserving a legendary list of the kings of the Angles is Layamon's Brut, also known as The Chronicle of Britain, a Middle English poem compiled by the English priest Layamon. It narrates the history of Britain and is the first historiography written in English since the Anglo-Saxon Chronicle. The poem is largely based on the Anglo-Norman Roman de Brut by Wace and includes an enlarged section on the life and exploits of King Arthur."
+          },
+          "prompt_output": {
+            "question": "What is Layamon's Brut and what does it contain?",
+            "noncommittal": 0
+          },
+          "edited_output": null
+        }
+      },
+      "is_accepted": false
+    },
+    {
+      "metric_input": {
+        "user_input": "Which band was founded first, Hole, the rock band that Courtney Love was a frontwoman of, or The Wolfhounds?",
+        "response": "Hole, the rock band that Courtney Love was a frontwoman of, was founded first in 1989. I don't know about The Wolfhounds."
+      },
+      "metric_output": 0,
+      "prompts": {
+        "response_relevance_prompt": {
+          "prompt_input": {
+            "response": "Hole, the rock band that Courtney Love was a frontwoman of, was founded first in 1989. I don't know about The Wolfhounds."
+          },
+          "prompt_output": {
+            "question": "When was the rock band Hole founded?",
+            "noncommittal": 1
+          },
+          "edited_output": null
+        }
+      },
+      "is_accepted": false
+    },
+    {
+      "metric_input": {
+        "user_input": "Were Pavel Urysohn and Leonid Levin known for the same type of work?",
+        "response": "Pavel Urysohn and Leonid Levin were not known for the same type of work. Pavel Urysohn was a Soviet mathematician known for his contributions in dimension theory and topology, while Leonid Levin is a Soviet-American computer scientist. Their areas of expertise are different."
+      },
+      "metric_output": 0.9261345186068884,
+      "prompts": {
+        "response_relevance_prompt": {
+          "prompt_input": {
+            "response": "Pavel Urysohn and Leonid Levin were not known for the same type of work. Pavel Urysohn was a Soviet mathematician known for his contributions in dimension theory and topology, while Leonid Levin is a Soviet-American computer scientist. Their areas of expertise are different."
+          },
+          "prompt_output": {
+            "question": "What were the areas of expertise of Pavel Urysohn and Leonid Levin?",
+            "noncommittal": 0
+          },
+          "edited_output": null
+        }
+      },
+      "is_accepted": true
+    },
+    {
+      "metric_input": {
+        "user_input": "Do musicians Robert Fleischman and Jimmy Barnes have the same nationality?",
+        "response": "No, Robert Fleischman is American and Jimmy Barnes is Scottish-Australian."
+      },
+      "metric_output": 0.9539575766321836,
+      "prompts": {
+        "response_relevance_prompt": {
+          "prompt_input": {
+            "response": "No, Robert Fleischman is American and Jimmy Barnes is Scottish-Australian."
+          },
+          "prompt_output": {
+            "question": "Are Robert Fleischman and Jimmy Barnes both American?",
+            "noncommittal": 0
+          },
+          "edited_output": null
+        }
+      },
+      "is_accepted": false
+    },
+    {
+      "metric_input": {
+        "user_input": "Where is the company that purchased Aixam based in?",
+        "response": "The company that purchased Aixam, Polaris Industries, is based in the United States."
+      },
+      "metric_output": 0.9610324486136639,
+      "prompts": {
+        "response_relevance_prompt": {
+          "prompt_input": {
+            "response": "The company that purchased Aixam, Polaris Industries, is based in the United States."
+          },
+          "prompt_output": {
+            "question": "Which company purchased Aixam?",
+            "noncommittal": 0
+          },
+          "edited_output": null
+        }
+      },
+      "is_accepted": true
+    },
+    {
+      "metric_input": {
+        "user_input": "Are both Tim McIlrath and Spike Slawson American punk rock musicians?",
+        "response": "Yes, both Tim McIlrath and Spike Slawson are American punk rock musicians."
+      },
+      "metric_output": 0.991501786133289,
+      "prompts": {
+        "response_relevance_prompt": {
+          "prompt_input": {
+            "response": "Yes, both Tim McIlrath and Spike Slawson are American punk rock musicians."
+          },
+          "prompt_output": {
+            "question": "Are Tim McIlrath and Spike Slawson American punk rock musicians?",
+            "noncommittal": 0
+          },
+          "edited_output": null
+        }
+      },
+      "is_accepted": false
+    }
+  ]
+}

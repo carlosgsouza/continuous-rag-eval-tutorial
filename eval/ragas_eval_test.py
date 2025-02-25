@@ -1,16 +1,17 @@
+import glob
 import json
 import os
 import pytest
 
 from langchain.docstore.document import Document
 from langchain_openai import ChatOpenAI
+from tqdm import tqdm
 from ragas import evaluate, EvaluationDataset
 from ragas.dataset_schema import SingleTurnSample
 from ragas.llms import LangchainLLMWrapper
 from ragas.metrics import AnswerCorrectness, Faithfulness, LLMContextPrecisionWithReference, LLMContextRecall, ResponseRelevancy
 
 from continuous_rag_eval.rag import RAG
-import glob
 
 @pytest.fixture(scope="module")
 def eval_dataset():
@@ -46,7 +47,7 @@ def evaluation(eval_dataset, rag):
     # Executes a query for each entry in the eval dataset and stores the input and output data in
     # samples, which is passed to Ragas for evaluation..
     samples = []
-    for q in eval_dataset:
+    for q in tqdm(eval_dataset[5:15], desc="Running queries"):
         # Skips entries from the eval dataset that have just the context, but no questions.
         if "question" not in q:
             continue
@@ -76,6 +77,7 @@ def evaluation(eval_dataset, rag):
         LLMContextPrecisionWithReference(llm=evaluator_llm),
         LLMContextRecall(llm=evaluator_llm)
     ]
+    train_metrics(metrics)
 
     # Performs the actual evaluation and uploads the results to app.ragas.io.
     eval_result = evaluate(evaluation_dataset, metrics)
@@ -95,6 +97,19 @@ def evaluation(eval_dataset, rag):
         json.dump(aggregated_scores, f, indent=2)
 
     return aggregated_scores
+
+def train_metrics(metrics):
+  """
+  Trains the metrics using download annotated samples.
+  """
+  with open("eval/edited_chain_runs.json", "r") as f:
+    chain_runs = json.load(f)
+  
+  for m in metrics:
+    # Skips metrics that don't have any annotated samples.
+    if(chain_runs.get(m.name) is None):
+      continue
+    m.train(path="eval/edited_chain_runs.json")
 
 def test_answer_relevancy(evaluation):
     assert evaluation["answer_relevancy"] > 0.5
